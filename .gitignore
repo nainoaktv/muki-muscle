@@ -14,4 +14,4 @@ __pycache__/
 .DS_Store
 
 # Configuration files with sensitive information (provide template versions)
-mukimuscle/mukimuscle/settings.py
+/mukimuscle/settings.py
