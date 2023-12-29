@@ -12,6 +12,39 @@ __pycache__/
 
 # macOS system files
 .DS_Store
+Thumbs.db
 
 # Configuration files with sensitive information (provide template versions)
 /mukimuscle/settings.py
+
+# Static files
+staticfiles/
+
+# Environment variables
+.env
+
+# Python-specific files
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+logs/
+
+# Secret key
+*.key
+
+# Ignore compiled JavaScript
+*.js
+*.js.map
+
+# Ignore compiled CSS
+*.css
+*.css.map
+
+# Ignore migration files if not using versioned database schema
+**/migrations/
