@@ -7,13 +7,13 @@ from django.contrib.contenttypes.models import ContentType
 class UserProfile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   bio = models.TextField(blank=True)
-  avatar = models.ImageField(upload_true="user_avatars/", null=True, blank=True)
+  avatar = models.ImageField(upload_to="user_avatars/", null=True, blank=True)
 
 class Post(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   content = models.TextField()
   image = models.ImageField(upload_to="post_images/", null=True, blank=True)
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
 class FitnessRoutine(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -23,6 +23,7 @@ class FitnessRoutine(models.Model):
 class Recipe(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   title = models.CharField(max_length=255)
+  image = models.ImageField(upload_to="recipe_images/", null=True, blank=True)
   ingredients = models.TextField()
   instructions = models.TextField()
 
@@ -30,17 +31,17 @@ class Comment(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   post = models.ForeignKey(Post, on_delete=models.CASCADE)
   content = models.TextField()
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
 class Like(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   post = models.ForeignKey(Post, on_delete=models.CASCADE)
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
 class Follow(models.Model):
   follower = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
   following = models.ForeignKey(User, related_name="followers", on_delete=models.CASCADE)
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
 class Hashtag(models.Model):
   name = models.CharField(max_length=50, unique=True)
@@ -62,11 +63,11 @@ class Message(models.Model):
   chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
   sender = models.ForeignKey(User, on_delete=models.CASCADE)
   content = models.TextField()
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
 
 class Activity(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
   object_id = models.PositiveIntegerField()
   content_object = GenericForeignKey("content_type", "object_id")
-  timestamp = models.DateTimeField(auto_new_add=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
