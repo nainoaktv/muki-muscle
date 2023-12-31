@@ -1,4 +1,82 @@
 {% extends "main/base.html" %} {% block content %}
-<h1>Home Page</h1>
-<p>Posts here...</p>
+<div style="height: 100%">
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      background-color: black;
+      height: 1080px;
+    "
+  >
+    <div style="position: relative; background-color: aqua; left: 100px">
+      <div class="card mt-5" style="width: 18rem; background-color: white">
+        <div
+          style="
+            position: relative;
+            display: flex;
+            width: 50%;
+            justify-content: center;
+            margin: 0 auto;
+            top: -35px;
+          "
+        >
+          <img
+            src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80"
+            class="card-img-top"
+            alt="placeholder image"
+            style="
+              background-color: black;
+              border-radius: 50%;
+              width: 125px;
+              height: 125px;
+            "
+          />
+        </div>
+        <span class="border-bottom" style="height: 1px"></span>
+        <div class="card-body">
+          <h5
+            class="card-text"
+            style="
+              border-radius: 5px;
+              display: inline-block;
+              position: relative;
+              top: 0px;
+            "
+          >
+            <a
+              class="btn btn-dark"
+              href="/profile/{{user.username}}"
+              role="button"
+              style="padding: 2px"
+              >@{{user.username}}</a
+            >
+          </h5>
+        </div>
+        <div style="display: flex; justify-content: space-around">
+          <a href="#" style="text-decoration: none; color: inherit"
+            >Followers</a
+          >
+          <a href="#" style="text-decoration: none; color: inherit"
+            >Following</a
+          >
+          <a href="#" style="text-decoration: none; color: inherit">Posts</a>
+        </div>
+      </div>
+    </div>
+    <div style="background-color: magenta; width: 40%">
+      <h1 style="color: black">posts</h1>
+    </div>
+    <div
+      style="
+        background-color: greenyellow;
+        position: relative;
+        right: 125px;
+        width: 200px;
+      "
+    >
+      <h5 style="color: black">Recommendations</h5>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
