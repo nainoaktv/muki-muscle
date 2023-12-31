@@ -64,7 +64,11 @@
       </div>
     </div>
     <div style="background-color: magenta; width: 40%">
-      <h1 style="color: black">posts</h1>
+      {% if post.id %}
+      <h1 style="color: black">{{post.content}}</h1>
+      {% else %}
+      <p>No posts available at this time...</p>
+      {% endif %}
     </div>
     <div
       style="
