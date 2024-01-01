@@ -91,11 +91,15 @@
           <h6 class="card-title">{{post.user}}</h6>
           <p class="card-text">{{post.content}}</p>
           <p class="card-text">
-            <small class="text-body-secondary">Last updated 3 mins ago</small>
+            <small class="text-body-secondary"> {{post.display_time}} </small>
           </p>
         </div>
         {% if post.image %}
-        <img src="..." class="card-img-bottom" alt="..." />
+        <img
+          src="{{ post.image.url }}"
+          class="card-img-bottom"
+          alt="Post Image"
+        />
         {% else %}
         <div></div>
         {% endif %}

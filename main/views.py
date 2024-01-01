@@ -1,10 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, UserProfile, Recipe
 from django.contrib.auth.models import User
+from django.utils.timesince import timesince
 from .forms import PostForm
 
 def home(request):
     posts = Post.objects.all().order_by("-timestamp")
+
+    for post in posts:
+        time_since = timesince(post.timestamp)
+
+        if 'hour' in time_since:
+            hours_since = time_since.split(',')[0]
+            post.display_time = f'Posted {hours_since} ago'
+        else:
+            post.display_time = f'Posted {time_since} ago'
+            
     return render(request, 'main/home.html', {'posts': posts})
 
 # TODO: Add username response to profile
