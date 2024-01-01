@@ -33,7 +33,10 @@
           />
         </div>
         <span class="border-bottom" style="height: 1px"></span>
-        <div class="card-body">
+        <div
+          class="card-body"
+          style="display: flex; justify-content: space-around"
+        >
           <h5
             class="card-text"
             style="
@@ -51,6 +54,23 @@
               >@{{user.username}}</a
             >
           </h5>
+          <h5
+            class="card-text"
+            style="
+              border-radius: 5px;
+              display: inline-block;
+              position: relative;
+              top: 0px;
+            "
+          >
+            <a
+              class="btn btn-outline-info"
+              href="/post/create/"
+              role="button"
+              style="padding: 2px"
+              >Create Post</a
+            >
+          </h5>
         </div>
         <div style="display: flex; justify-content: space-around">
           <a href="#" style="text-decoration: none; color: inherit"
@@ -64,11 +84,12 @@
       </div>
     </div>
     <div style="background-color: magenta; width: 40%">
-      {% if post.id %}
-      <h1 style="color: black">{{post.content}}</h1>
+      {% for post in posts %} {% if post.id %}
+      <p style="color: black">{{post.content}}</p>
+      <p style="color: black">{{post.user}}</p>
       {% else %}
       <p>No posts available at this time...</p>
-      {% endif %}
+      {% endif %} {% endfor %}
     </div>
     <div
       style="
