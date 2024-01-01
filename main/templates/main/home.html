@@ -83,6 +83,26 @@
         </div>
       </div>
     </div>
+
+    <div style="background-color: magenta; width: 40%">
+      {% for post in posts %} {% if post.id %}
+      <div class="card mb-3 mt-2">
+        <div class="card-body">
+          <h6 class="card-title">{{post.user}}</h6>
+          <p class="card-text">{{post.content}}</p>
+          <p class="card-text">
+            <small class="text-body-secondary">Last updated 3 mins ago</small>
+          </p>
+        </div>
+        {% if post.image %}
+        <img src="..." class="card-img-bottom" alt="..." />
+        {% else %}
+        <div></div>
+        {% endif %}
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    {% comment %} * Test for rendering posts
     <div style="background-color: magenta; width: 40%">
       {% for post in posts %} {% if post.id %}
       <p style="color: black">{{post.content}}</p>
@@ -91,6 +111,8 @@
       <p>No posts available at this time...</p>
       {% endif %} {% endfor %}
     </div>
+    {% endcomment %}
+
     <div
       style="
         background-color: greenyellow;
