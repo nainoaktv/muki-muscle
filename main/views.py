@@ -12,9 +12,9 @@ def home(request):
 
         if 'hour' in time_since:
             hours_since = time_since.split(',')[0]
-            post.display_time = f'Posted {hours_since} ago'
+            post.display_time = f'{hours_since}'
         else:
-            post.display_time = f'Posted {time_since} ago'
+            post.display_time = f'{time_since}'
             
     return render(request, 'main/home.html', {'posts': posts})
 
@@ -25,10 +25,10 @@ def home(request):
 #     return render(request, 'profile/profile_detail.html', {"user_profile": user_profile, "user": user})
 
 def profile(request, username):
-    print(f"Requested username: {username}")
     user = get_object_or_404(User, username=username)
-    print(f"User found: {user.username}")
-    return render(request, 'profile/profile_detail.html', {"user": user})
+    user_posts = Post.objects.filter(user=user)
+    print(f"User posts: {user_posts} made by {user}")
+    return render(request, 'profile/profile_detail.html', {"user": user, "user_posts": user_posts})
 
 def create_post(request):
     if request.method == 'POST':
