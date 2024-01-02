@@ -1,4 +1,7 @@
-{% extends "main/base.html" %} {% block content %}
+{% extends "main/base.html" %}
+{% load bootstrap_icons %} 
+{% load static %}
+{% block content %}
 <div style="height: 100%">
   <div
     style="
@@ -88,9 +91,17 @@
       {% for post in posts %} {% if post.id %}
       <div class="card mb-3 mt-2">
         <div class="card-body">
-          <h6 class="card-title">{{post.user}}</h6>
+          <a
+            class="card-title"
+            href="/profile/{{user.username}}"
+            role="button"
+            style="text-decoration: none;"
+            id="post-user"
+          >
+            @{{post.user}}
+          </a>
           <p class="card-text">{{post.content}}</p>
-          <p class="card-text">
+          <p class="card-text mt-0">
             <small class="text-body-secondary"> {{post.display_time}} </small>
           </p>
         </div>
@@ -103,19 +114,23 @@
         {% else %}
         <div></div>
         {% endif %}
+        <div
+          class="card-footer"
+          style="display: flex; justify-content: space-around"
+        >
+          <button id="like-btn" type="button" style="border: none; background: none">
+            {% bs_icon 'balloon-heart-fill' size="25px" %}
+          </button>
+          <button id="repost-btn" type="button" style="border: none; background: none">
+            {% bs_icon 'repeat' size="25px" %}
+          </button>
+          <button id="comment-btn" type="button" style="border: none; background: none">
+            {% bs_icon 'chat-text' size="25px" %}
+          </button>
+        </div>
       </div>
       {% endif %} {% endfor %}
     </div>
-    {% comment %} * Test for rendering posts
-    <div style="background-color: magenta; width: 40%">
-      {% for post in posts %} {% if post.id %}
-      <p style="color: black">{{post.content}}</p>
-      <p style="color: black">{{post.user}}</p>
-      {% else %}
-      <p>No posts available at this time...</p>
-      {% endif %} {% endfor %}
-    </div>
-    {% endcomment %}
 
     <div
       style="
