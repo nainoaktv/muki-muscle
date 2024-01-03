@@ -104,7 +104,11 @@ TODO: Continue working on user card
           <div style="display: flex;">
             <a
               class="card-title"
-              href="/user_profile/{{ post.user.id }}"
+              {% if post.user.id == request.user.id %}
+                href="{% url 'profile' username=request.user.username %}"
+              {% else %}
+                href="/user_profile/{{ post.user.id }}"
+              {% endif %}
               role="button"
               style="text-decoration: none;"
               id="post-user"
