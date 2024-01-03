@@ -2,7 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, UserProfile, Recipe
 from django.contrib.auth.models import User
 from django.utils.timesince import timesince
-from .forms import PostForm
+from .forms import PostForm, SignupForm
+from django.contrib.auth import login
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("home")
+    else:
+        form = SignupForm()
+    return render(request, "registration/signup.html", {'form': form})
+
 
 def home(request):
     posts = Post.objects.all().order_by("-timestamp")
@@ -18,17 +32,19 @@ def home(request):
             
     return render(request, 'main/home.html', {'posts': posts})
 
-# TODO: Add username response to profile
-# def profile(request, username):
-#     user = get_object_or_404(User, username=username)
-#     user_profile = get_object_or_404(UserProfile, user=user)
-#     return render(request, 'profile/profile_detail.html', {"user_profile": user_profile, "user": user})
-
+# * Show logged in users profile
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     user_posts = Post.objects.filter(user=user)
     print(f"User posts: {user_posts} made by {user}")
     return render(request, 'profile/profile_detail.html', {"user": user, "user_posts": user_posts})
+
+# * Show another user profile
+def show_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    print(f"Currently viewing {user.username}")
+    posts = Post.objects.filter(user=user)
+    return render(request, 'profile/show.html', {"user": user, "posts": posts})
 
 def create_post(request):
     if request.method == 'POST':
