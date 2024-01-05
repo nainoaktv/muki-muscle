@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, UserProfile, Recipe
 from django.contrib.auth.models import User
 from django.utils.timesince import timesince
-from .forms import PostForm, SignupForm
-from django.contrib.auth import login
+from .forms import PostForm, SignupForm, LoginForm
+from django.contrib.auth import login, logout, authenticate
 
 
 def signup(request):
@@ -16,6 +16,28 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, "registration/signup.html", {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                form.add_error(None, 'Invalid username or password. Please try again.')
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("user_login")
 
 
 def home(request):
@@ -64,4 +86,4 @@ def post_detail(request, post_id):
     # return render(request, 'post/post_detail.html')
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'post/post_detail.html', {'post': post})
-        
+
