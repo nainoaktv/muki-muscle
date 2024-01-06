@@ -99,16 +99,12 @@ TODO: Continue working on user card
 
     <div style="width: 40%">
       {% for post in posts %} {% if post.id %}
-      <div class="card mb-3 mt-2">
+      <div class="card mb-3 mt-2" style="background: white;">
         <div class="card-body">
           <div style="display: flex;">
             <a
               class="card-title"
-              {% if post.user.id == request.user.id %}
-                href="{% url 'profile' username=request.user.username %}"
-              {% else %}
-                href="/user_profile/{{ post.user.id }}"
-              {% endif %}
+                href="/profile/{{ post.user.username }}"
               role="button"
               style="text-decoration: none;"
               id="post-user"

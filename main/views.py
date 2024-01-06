@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.timesince import timesince
 from .forms import PostForm, SignupForm, LoginForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 def signup(request):
@@ -56,17 +57,22 @@ def home(request):
 
 # * Show logged in users profile
 def profile(request, username):
+    current_user = request.user
     user = get_object_or_404(User, username=username)
-    user_posts = Post.objects.filter(user=user)
-    print(f"User posts: {user_posts} made by {user}")
-    return render(request, 'profile/profile_detail.html', {"user": user, "user_posts": user_posts})
+    posts = Post.objects.filter(user=user)
+    return render(request, 'profile/show.html', {
+        "current_user": current_user,
+        "user": user, 
+        "posts": posts,
+
+    })
 
 # * Show another user profile
-def show_profile(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    print(f"Currently viewing {user.username}")
-    posts = Post.objects.filter(user=user)
-    return render(request, 'profile/show.html', {"user": user, "posts": posts})
+# def show_profile(request, user_id):
+#     user = get_object_or_404(User, id=user_id)
+#     print(f"Currently viewing {user.username}")
+#     posts = Post.objects.filter(user=user)
+#     return render(request, 'profile/show.html', {"user": user, "posts": posts})
 
 def create_post(request):
     if request.method == 'POST':
