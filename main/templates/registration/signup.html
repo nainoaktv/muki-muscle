@@ -1,44 +1,65 @@
-{% extends 'main/base.html' %}
-{% load static %}
-{% block content %}
-<div class="container mt-5">
-    <h2 class="mb-4">Sign Up</h2>
-    <form method="post" class="needs-validation" action="{% url 'signup' %}" novalidate>
-      {% csrf_token %}
-      {{ form.non_field_errors }}
-      <div class="row g-3">
-        <div class="col-md-6">
-          {{ form.username.label_tag }}
-          {{ form.username }}
-          <div class="invalid-feedback">{{ form.username.errors }}</div>
-        </div>
-        <div class="col-md-6">
-          {{ form.email.label_tag }}
-          {{ form.email }}
-          <div class="invalid-feedback">{{ form.email.errors }}</div>
-        </div>
-        <div class="col-md-6">
-          {{ form.first_name.label_tag }}
-          {{ form.first_name }}
-          <div class="invalid-feedback">{{ form.first_name.errors }}</div>
-        </div>
-        <div class="col-md-6">
-          {{ form.last_name.label_tag }}
-          {{ form.last_name }}
-          <div class="invalid-feedback">{{ form.last_name.errors }}</div>
-        </div>
-        <div class="col-md-6">
-          {{ form.password1.label_tag }}
-          {{ form.password1 }}
-          <div class="invalid-feedback">{{ form.password1.errors }}</div>
-        </div>
-        <div class="col-md-6">
-          {{ form.password2.label_tag }}
-          {{ form.password2 }}
-          <div class="invalid-feedback">{{ form.password2.errors }}</div>
-        </div>
+{% extends 'main/base.html' %} 
+{% load static %} 
+{% block content %} 
+{% comment %} 
+
+TODO: Make mobile friendly for below medium devices. 
+! Improve styling further later, along with Login page. 
+
+{% endcomment %}
+
+<div class="container mt-5 border border-dark">
+  <h2 class="mb-4 text-center">Sign Up</h2>
+  <form
+    method="post"
+    class="needs-validation"
+    action="{% url 'signup' %}"
+    novalidate
+  >
+    {% csrf_token %} {{ form.non_field_errors }}
+    <div class="row g-2 input-group">
+      <div class="col-md-6 position-relative" style="left: 75px">
+        {{ form.username.label_tag }} {{ form.username }}
+        <div class="invalid-feedback">{{ form.username.errors }}</div>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
-    </form>
-  </div>
+
+      <div class="col-md-6 position-relative" style="left: 35px">
+        {{ form.email.label_tag }} {{ form.email }}
+        <div class="invalid-feedback">{{ form.email.errors }}</div>
+      </div>
+
+      <div class="col-md-6 position-relative" style="left: 75px">
+        {{ form.first_name.label_tag }} {{ form.first_name }}
+        <div class="invalid-feedback">{{ form.first_name.errors }}</div>
+      </div>
+
+      <div class="col-md-6">
+        {{ form.last_name.label_tag }} {{ form.last_name }}
+        <div class="invalid-feedback">{{ form.last_name.errors }}</div>
+      </div>
+
+      <div class="col-md-6 position-relative" style="left: 85px">
+        {{ form.password1.label_tag }} {{ form.password1 }}
+        <div class="invalid-feedback">{{ form.password1.errors }}</div>
+      </div>
+
+      <div class="col-md-6 position-relative" style="right: 53px">
+        {{ form.password2.label_tag }} {{ form.password2 }}
+        <div class="invalid-feedback">{{ form.password2.errors }}</div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <button type="submit" class="btn btn-outline-dark w-25 mt-3">
+        Sign Up
+      </button>
+    </div>
+    <div class="text-center" style="margin-top: 20px">
+      <p class="mb-0">Already have an account?</p>
+      <a href="/login" class="btn btn-outline-dark w-25" style="width: 100px">
+        Login
+      </a>
+    </div>
+  </form>
+</div>
 {% endblock %}
