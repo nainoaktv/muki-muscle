@@ -1,0 +1,65 @@
+{% extends "main/base.html" %} 
+{% load static %}
+{% load bootstrap_icons %}
+{% block content %}
+
+<div class="w-50 mx-auto">
+  <div class="card mb-3 mt-2" style="background: white">
+    <div class="card-body">
+      <div style="display: flex">
+        <a
+          class="card-title"
+          href="/profile/{{ post.user.username }}"
+          role="button"
+          style="text-decoration: none"
+          id="post-user"
+        >
+          @{{post.user}}
+        </a>
+        {% comment %}
+        <p class="card-text" style="margin-left: 7px">
+          <em class="text-body-secondary">
+            <small> {{post.display_time}} </small>
+          </em>
+        </p>
+        {% endcomment %}
+      </div>
+
+      <p class="card-text">{{post.content}}</p>
+    </div>
+    {% if post.image %}
+    <img src="{{ post.image.url }}" class="card-img-bottom" alt="Post Image" />
+    {% else %}
+    <div></div>
+    {% endif %}
+
+    <div
+      class="card-footer"
+      style="display: flex; justify-content: space-around"
+    >
+      <button
+        id="like-btn"
+        type="button"
+        style="border: none; background: none"
+      >
+        {% bs_icon 'balloon-heart-fill' size="25px" %}
+      </button>
+      <button
+        id="repost-btn"
+        type="button"
+        style="border: none; background: none"
+      >
+        {% bs_icon 'repeat' size="25px" %}
+      </button>
+      <button
+        id="comment-btn"
+        type="button"
+        style="border: none; background: none"
+      >
+        {% bs_icon 'chat-text' size="25px" %}
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

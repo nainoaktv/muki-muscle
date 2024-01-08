@@ -97,6 +97,7 @@ TODO: Continue working on user card
       </div>
     </div>
 
+    
     <div style="width: 40%">
       {% for post in posts %} {% if post.id %}
       <div class="card mb-3 mt-2" style="background: white;">
@@ -117,8 +118,9 @@ TODO: Continue working on user card
               </em>
             </p>
           </div>
-          
+          <a class="text-decoration-none text-dark" href="{% url 'post_detail' post.id %}">
           <p class="card-text">{{post.content}}</p>
+          </a>
           
         </div>
         {% if post.image %}
@@ -130,6 +132,7 @@ TODO: Continue working on user card
         {% else %}
         <div></div>
         {% endif %}
+
         <div
           class="card-footer"
           style="display: flex; justify-content: space-around"
@@ -147,6 +150,7 @@ TODO: Continue working on user card
       </div>
       {% endif %} {% endfor %}
     </div>
+
 
     <div
       style="

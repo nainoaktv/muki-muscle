@@ -8,8 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 
 # ! current_user needs to be called for each view that needs to use "Profile" navlink
-# TODO: Find out if there is a better way to use Profile nav link to route to current user 
+# ? Just get rid of profile navlink to avoid repetitive code
+# TODO: Find out if there is a better way to use Profile nav link to route to current user
 
+
+# * Auth Views
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -41,12 +44,11 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
-
 def user_logout(request):
     logout(request)
     return redirect("user_login")
 
-
+# * Routes
 def home(request):
     current_user = request.user
     if not request.user.is_authenticated:
@@ -65,7 +67,6 @@ def home(request):
             
     return render(request, 'main/home.html', {'posts': posts, "current_user": current_user, })
 
-# * Show logged in users profile
 def profile(request, username):
     current_user = request.user
     print(f"This is the current user: {current_user}")
@@ -82,15 +83,8 @@ def profile(request, username):
             "user": user, 
             "posts": posts,
         })
-    
 
-# * Show another user profile
-# def show_profile(request, user_id):
-#     user = get_object_or_404(User, id=user_id)
-#     print(f"Currently viewing {user.username}")
-#     posts = Post.objects.filter(user=user)
-#     return render(request, 'profile/show.html', {"user": user, "posts": posts})
-
+# * Posts
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -105,8 +99,9 @@ def create_post(request):
         
     return render(request, "post/create_post.html", {"form": form})
 
+
+# TODO: Details need to include > comments, likes, reposts, username for each comment.
 def post_detail(request, post_id):
-    # return render(request, 'post/post_detail.html')
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'post/post_detail.html', {'post': post})
 
