@@ -1,21 +1,88 @@
 {% extends "main/base.html" %} 
+{% load bootstrap_icons %}
+{% load static %} 
 {% block content %}
-<h1>{{ user.username }}'s Profile</h1>
-<p>Email: {{ user.email }}</p>
-<h2>Posts:</h2>
-  {% if posts %}
-    <ul>
+<div class="container mt-5">
+  <div class="row">
+    <!-- User Card -->
+    <div class="col-md-3">
+      <div class="card">
+        <img
+          src="https://images.fineartamerica.com/images/artworkimages/medium/3/badge-luffy-gear-5-avatar-thuan-ngo-ba-transparent.png"
+          class="card-img-top"
+          alt="User Avatar"
+        />
+        <div class="card-body text-center">
+          <h5 class="card-title">@{{ user.username }}</h5>
+          <div class="btn-group" role="group">
+            <a
+              href="{% url 'profile' username=user.username %}"
+              class="btn btn-dark"
+              >Profile</a
+            >
+            <a href="{% url 'create_post' %}" class="btn btn-outline-info"
+              >Create Post</a
+            >
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <a href="#" class="text-decoration-none text-dark">Followers</a>
+          <a href="#" class="text-decoration-none text-dark">Following</a>
+          <a href="#" class="text-decoration-none text-dark">Posts</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Posts -->
+    <div class="col-md-6">
       {% for post in posts %}
-
-        <li>
-          <p>{{ post.content }}</p>
-        </li>
-
+      <div class="card mb-3">
+        <div class="card-body">
+          <h6 class="card-title">
+            <a
+              href="{% if post.user.id == request.user.id %}{% url 'profile' username=request.user.username %}{% else %}/user_profile/{{ post.user.id }}{% endif %}"
+              class="text-decoration-none text-dark"
+            >
+              @{{ post.user }}
+            </a>
+          </h6>
+          <p class="card-text">{{ post.content }}</p>
+          <small class="text-muted">{{ post.display_time }}</small>
+        </div>
+        {% if post.image %}
+        <img
+          src="{{ post.image.url }}"
+          class="card-img-bottom"
+          alt="Post Image"
+        />
+        {% endif %}
+        <div class="card-footer">
+          <button
+            id="like-btn"
+            type="button"
+            style="border: none; background: none"
+          >
+            {% bs_icon 'balloon-heart-fill' size="25px" %}
+          </button>
+          <button
+            id="repost-btn"
+            type="button"
+            style="border: none; background: none"
+          >
+            {% bs_icon 'repeat' size="25px" %}
+          </button>
+          <button
+            id="comment-btn"
+            type="button"
+            style="border: none; background: none"
+          >
+            {% bs_icon 'chat-text' size="25px" %}
+          </button>
+        </div>
+      </div>
       {% endfor %}
-    </ul>
-  {% else %}
+    </div>
 
-    <p>No posts available.</p>
-    
-  {% endif %}
-{% endblock %}
+    {% endblock %}
+  </div>
+</div>
