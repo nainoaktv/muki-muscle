@@ -5,7 +5,10 @@ from django.utils.timesince import timesince
 from .forms import PostForm, SignupForm, LoginForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseBadRequest
 
+# ! current_user needs to be called for each view that needs to use "Profile" navlink
+# TODO: Find out if there is a better way to use Profile nav link to route to current user 
 
 def signup(request):
     if request.method == 'POST':
@@ -19,6 +22,9 @@ def signup(request):
     return render(request, "registration/signup.html", {'form': form})
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -42,6 +48,10 @@ def user_logout(request):
 
 
 def home(request):
+    current_user = request.user
+    if not request.user.is_authenticated:
+        return redirect("user_login")
+
     posts = Post.objects.all().order_by("-timestamp")
 
     for post in posts:
@@ -53,19 +63,26 @@ def home(request):
         else:
             post.display_time = f'{time_since}'
             
-    return render(request, 'main/home.html', {'posts': posts})
+    return render(request, 'main/home.html', {'posts': posts, "current_user": current_user, })
 
 # * Show logged in users profile
 def profile(request, username):
     current_user = request.user
+    print(f"This is the current user: {current_user}")
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user)
-    return render(request, 'profile/show.html', {
-        "current_user": current_user,
-        "user": user, 
-        "posts": posts,
 
-    })
+    if not username:
+        return HttpResponseBadRequest("Invalid Username")
+        
+    
+    if user:
+        return render(request, 'profile/show.html', {
+            "current_user": current_user,
+            "user": user, 
+            "posts": posts,
+        })
+    
 
 # * Show another user profile
 # def show_profile(request, user_id):

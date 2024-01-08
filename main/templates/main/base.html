@@ -79,12 +79,7 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-{% comment %} 
-! There is an issue with clicking profile when viewing another users profile. 
-! I.E. While logged into Okeashea and I view nainoa's profile if I click Profile from Navbar it's still refers
-! to Nainoa as user.username
-{% endcomment %}
-                href="/profile/{{ current_user.username }}"
+                href="/profile/{{ current_user }}"
                 >Profile</a
               >
             </li>
