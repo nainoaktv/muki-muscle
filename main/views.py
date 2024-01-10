@@ -6,6 +6,7 @@ from .forms import PostForm, SignupForm, LoginForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # ! current_user needs to be called for each view that needs to use "Profile" navlink
 # ? Just get rid of profile navlink to avoid repetitive code
@@ -61,9 +62,9 @@ def home(request):
 
         if 'hour' in time_since:
             hours_since = time_since.split(',')[0]
-            post.display_time = f'{hours_since}'
+            post.display_time = f'{hours_since} ago'
         else:
-            post.display_time = f'{time_since}'
+            post.display_time = f'{time_since} ago'
             
     return render(request, 'main/home.html', {'posts': posts, "current_user": current_user, })
 
@@ -72,6 +73,15 @@ def profile(request, username):
     print(f"This is the current user: {current_user}")
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user)
+
+    for post in posts:
+        time_since = timesince(post.timestamp)
+
+        if 'hour' in time_since:
+            hours_since = time_since.split(',')[0]
+            post.display_time = f'{hours_since} ago'
+        else:
+            post.display_time = f'{time_since} ago'
 
     if not username:
         return HttpResponseBadRequest("Invalid Username")
@@ -99,9 +109,27 @@ def create_post(request):
         
     return render(request, "post/create_post.html", {"form": form})
 
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+    return render(request, 'post/delete_post.html', {'post': post})
+
 
 # TODO: Details need to include > comments, likes, reposts, username for each comment.
 def post_detail(request, post_id):
+    current_user = request.user
     post = get_object_or_404(Post, id=post_id)
-    return render(request, 'post/post_detail.html', {'post': post})
+
+
+    time_since = timesince(post.timestamp)
+
+    if 'hour' in time_since:
+        hours_since = time_since.split(',')[0]
+        post.display_time = f'{hours_since} ago'
+    else:
+        post.display_time = f'{time_since} ago'
+
+    return render(request, 'post/post_detail.html', {'post': post, "current_user": current_user})
 

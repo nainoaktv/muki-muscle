@@ -6,7 +6,7 @@
 <div class="w-50 mx-auto">
   <div class="card mb-3 mt-2" style="background: white">
     <div class="card-body">
-      <div style="display: flex">
+      <div class="d-flex">
         <a
           class="card-title"
           href="/profile/{{ post.user.username }}"
@@ -16,13 +16,13 @@
         >
           @{{post.user}}
         </a>
-        {% comment %}
+
         <p class="card-text" style="margin-left: 7px">
           <em class="text-body-secondary">
             <small> {{post.display_time}} </small>
           </em>
         </p>
-        {% endcomment %}
+
       </div>
 
       <p class="card-text">{{post.content}}</p>
@@ -58,6 +58,17 @@
       >
         {% bs_icon 'chat-text' size="25px" %}
       </button>
+      {% if current_user == post.user %}
+      <a
+        id="trash-btn"
+        type="button"
+        href="{% url 'delete_post' post.id %}"
+        class="border-0 bg-transparent btn btn-outline-info"
+
+      >
+        {% bs_icon 'trash' size="25px" %}
+      </a>
+      {% endif %}
     </div>
   </div>
 </div>
