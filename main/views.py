@@ -2,11 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, UserProfile, Recipe
 from django.contrib.auth.models import User
 from django.utils.timesince import timesince
-from .forms import PostForm, SignupForm, LoginForm
+from .forms import PostForm, SignupForm, LoginForm, UpdatePostForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # ! current_user needs to be called for each view that needs to use "Profile" navlink
 # ? Just get rid of profile navlink to avoid repetitive code
@@ -108,6 +107,21 @@ def create_post(request):
         form = PostForm()
         
     return render(request, "post/create_post.html", {"form": form})
+
+def update_post(request, post_id):
+    current_user = request.user
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = UpdatePostForm(request.POST)
+        if form.is_valid():
+            post.content = form.cleaned_data['content']
+            post.save()
+            return redirect("post_detail", post_id=post.id)
+    else:
+        form = UpdatePostForm(initial={'content': post.content})
+    
+    return render(request, 'post/update_post.html', {"form": form, 'post': post, "current_user": current_user})
 
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)

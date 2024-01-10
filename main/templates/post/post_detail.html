@@ -68,6 +68,14 @@
       >
         {% bs_icon 'trash' size="25px" %}
       </a>
+      <a
+        id="pencil-btn"
+        type="button"
+        href="{% url 'update_post' post.id %}"
+        class="border-0 bg-transparent btn btn-outline-warning"
+      >
+        {% bs_icon 'pencil' size="25px" %}
+      </a>
       {% endif %}
     </div>
   </div>

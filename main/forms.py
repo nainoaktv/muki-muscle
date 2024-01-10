@@ -9,6 +9,9 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['content']
 
+class UpdatePostForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}))
+
 class SignupForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=30, required=True, help_text="Required.")
