@@ -1,7 +1,9 @@
 {% extends "main/base.html" %} 
-{% load bootstrap_icons %}
+{% load bootstrap_icons %} 
 {% load static %} 
 {% block content %}
+
+
 <div class="container mt-5">
   <div class="row">
     <!-- User Card -->
@@ -38,16 +40,25 @@
       {% for post in posts %}
       <div class="card mb-3">
         <div class="card-body">
-          <h6 class="card-title">
+          <div class="d-flex">
             <a
-              href="{% if post.user.id == request.user.id %}{% url 'profile' username=request.user.username %}{% else %}/user_profile/{{ post.user.id }}{% endif %}"
+              href="{% if post.user.id == request.user.id %}{% url 'profile' username=request.user.username %}{% endif %}"
               class="text-decoration-none text-dark"
             >
               @{{ post.user }}
             </a>
-          </h6>
-          <p class="card-text">{{ post.content }}</p>
-          <small class="text-muted">{{ post.display_time }}</small>
+            <p class="card-text" style="margin-left: 7px">
+              <em class="text-body-secondary">
+                <small> {{post.display_time}} </small>
+              </em>
+            </p>
+          </div>
+          <a
+            class="text-decoration-none text-dark"
+            href="{% url 'post_detail' post.id %}"
+          >
+            <p class="card-text">{{ post.content }}</p>
+          </a>
         </div>
         {% if post.image %}
         <img
@@ -56,25 +67,27 @@
           alt="Post Image"
         />
         {% endif %}
-        <div class="card-footer">
+        <div class="card-footer d-flex justify-content-around">
           <button
             id="like-btn"
             type="button"
-            style="border: none; background: none"
+            class="border-0 bg-transparent"
           >
             {% bs_icon 'balloon-heart-fill' size="25px" %}
           </button>
           <button
             id="repost-btn"
             type="button"
-            style="border: none; background: none"
+            class="border-0 bg-transparent"
+
           >
             {% bs_icon 'repeat' size="25px" %}
           </button>
           <button
             id="comment-btn"
             type="button"
-            style="border: none; background: none"
+            class="border-0 bg-transparent"
+
           >
             {% bs_icon 'chat-text' size="25px" %}
           </button>
@@ -82,7 +95,8 @@
       </div>
       {% endfor %}
     </div>
-
-    {% endblock %}
   </div>
 </div>
+
+
+{% endblock %}
