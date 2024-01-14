@@ -1,6 +1,23 @@
-{% extends "main/base.html" %} {% block content %}
-<form method="post" action="{% url 'create_post' %}">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Post</button>
-</form>
+{% extends "main/base.html" %} 
+{% load static %}
+{% block content %}
+
+<div class="col-sm-4 well mx-auto mt-5 bg-info rounded p-4">
+  <p id="create-post-username">@{{ user.username }}</p>
+  <form accept-charset="UTF-8" action="{% url 'create_post' %}" method="post">
+    {% csrf_token %}
+    <textarea
+      class="form-control focus-ring focus-ring-dark"
+      style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px"
+      id="text"
+      name="content"
+      maxlength="200"
+      placeholder="Create Post..."
+      rows="5"
+    ></textarea>
+    <span class="pull-right label label-default" id="count_message"></span>
+    <br />
+    <button class="btn btn-outline-dark" type="submit">Post</button>
+  </form>
+</div>
 {% endblock %}
