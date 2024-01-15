@@ -1,23 +1,47 @@
 {% extends "main/base.html" %} 
-{% load static %}
-{% block content %}
+{% load static %} 
+{% block content %} 
+{% comment %} 
+TODO: Update user name font. 
+!: figure out test counter script 
+{% endcomment %}
 
-<div class="col-sm-4 well mx-auto mt-5 bg-info rounded p-4">
-  <p id="create-post-username">@{{ user.username }}</p>
-  <form accept-charset="UTF-8" action="{% url 'create_post' %}" method="post">
-    {% csrf_token %}
-    <textarea
-      class="form-control focus-ring focus-ring-dark"
-      style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px"
-      id="text"
-      name="content"
-      maxlength="200"
-      placeholder="Create Post..."
-      rows="5"
-    ></textarea>
-    <span class="pull-right label label-default" id="count_message"></span>
-    <br />
-    <button class="btn btn-outline-dark" type="submit">Post</button>
-  </form>
+<div class="card mb-3 mx-auto mt-5" style="max-width: 750px">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img
+        src="https://images.fineartamerica.com/images/artworkimages/medium/3/badge-luffy-gear-5-avatar-thuan-ngo-ba-transparent.png"
+        class="img-fluid rounded-start"
+        alt="User Avatar"
+      />
+      <h5 class="card-title d-flex justify-content-center">@{{ user.username }}</h5>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body" style="width: 1200px">
+        <div class="col-sm-4 well p-4">
+          <form
+            accept-charset="UTF-8"
+            action="{% url 'create_post' %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <textarea
+              class="form-control focus-ring focus-ring-dark"
+              style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px"
+              id="text"
+              name="content"
+              maxlength="200"
+              placeholder="Create Post..."
+              rows="10"
+            ></textarea>
+            <span class="form-text text-muted" id="count_message"></span>
+            <br />
+            <button class="btn btn-outline-dark" type="submit">Post</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
