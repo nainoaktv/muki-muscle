@@ -71,7 +71,7 @@ def profile(request, username):
     current_user = request.user
     print(f"This is the current user: {current_user}")
     user = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(user=user)
+    posts = Post.objects.filter(user=user).order_by("-timestamp")
 
     for post in posts:
         time_since = timesince(post.timestamp)
