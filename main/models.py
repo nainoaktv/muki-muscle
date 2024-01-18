@@ -29,7 +29,7 @@ class Recipe(models.Model):
 
 class Comment(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
-  post = models.ForeignKey(Post, on_delete=models.CASCADE)
+  post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
   content = models.TextField()
   timestamp = models.DateTimeField(auto_now_add=True)
 

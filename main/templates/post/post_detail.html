@@ -34,27 +34,26 @@
     {% endif %}
 
     <div
-      class="card-footer"
-      style="display: flex; justify-content: space-around"
+      class="card-footer d-flex justify-content-around"
     >
       <button
         id="like-btn"
         type="button"
-        style="border: none; background: none"
+        class="border-0 bg-transparent"
       >
         {% bs_icon 'balloon-heart-fill' size="25px" %}
       </button>
       <button
         id="repost-btn"
         type="button"
-        style="border: none; background: none"
+        class="border-0 bg-transparent"
       >
         {% bs_icon 'repeat' size="25px" %}
       </button>
       <button
         id="comment-btn"
         type="button"
-        style="border: none; background: none"
+        class="border-0 bg-transparent"
       >
         {% bs_icon 'chat-text' size="25px" %}
       </button>
@@ -63,7 +62,7 @@
         id="trash-btn"
         type="button"
         href="{% url 'delete_post' post.id %}"
-        class="border-0 bg-transparent btn btn-outline-info"
+        class="border-0 bg-transparent"
 
       >
         {% bs_icon 'trash' size="25px" %}
@@ -72,12 +71,33 @@
         id="pencil-btn"
         type="button"
         href="{% url 'update_post' post.id %}"
-        class="border-0 bg-transparent btn btn-outline-warning"
+        class="border-0 bg-transparent"
       >
         {% bs_icon 'pencil' size="25px" %}
       </a>
       {% endif %}
     </div>
+  </div>
+  <div class="w-50 mx-auto mt-4">
+    <h4>Comments</h4>
+    {% for comment in post.comments.all %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p class="card-text">{{ comment.content }}</p>
+                <small class="text-muted">{{ comment.user.username }} - {{ comment.timestamp }}</small>
+            </div>
+        </div>
+    {% endfor %}
+  </div>
+  <div class="w-50 mx-auto mt-4">
+    <h4>Add a Comment</h4>
+    <form method="post" action="{% url 'add_comment' post.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea class="form-control" name="content" placeholder="Your comment..." rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Add Comment</button>
+    </form>
   </div>
 </div>
 

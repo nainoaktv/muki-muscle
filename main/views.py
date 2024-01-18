@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, UserProfile, Recipe
+from .models import Post, Comment, UserProfile, Recipe
 from django.contrib.auth.models import User
 from django.utils.timesince import timesince
 from .forms import PostForm, SignupForm, LoginForm, UpdatePostForm
@@ -147,3 +147,10 @@ def post_detail(request, post_id):
 
     return render(request, 'post/post_detail.html', {'post': post, "current_user": current_user})
 
+def add_comment(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=post_id)
+        content = request.POST['content']
+        Comment.objects.create(user=request.user, post=post, content=content)
+    
+    return redirect('post_detail', post_id=post_id)
