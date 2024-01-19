@@ -54,6 +54,9 @@
         id="comment-btn"
         type="button"
         class="border-0 bg-transparent"
+        data-bs-toggle="modal" 
+        data-bs-target="#exampleModal" 
+        data-bs-whatever="@getbootstrap"
       >
         {% bs_icon 'chat-text' size="25px" %}
       </button>
@@ -78,18 +81,49 @@
       {% endif %}
     </div>
   </div>
-  <div class="w-50 mx-auto mt-4">
-    <h4>Comments</h4>
-    {% for comment in post.comments.all %}
-        <div class="card mb-2">
-            <div class="card-body">
-                <p class="card-text">{{ comment.content }}</p>
-                <small class="text-muted">{{ comment.user.username }} - {{ comment.timestamp }}</small>
-            </div>
-        </div>
-    {% endfor %}
+
+  {% comment %} 
+  TODO: Update Comment display & add comment form
+  {% endcomment %}
+  {% for comment in post.comments.all %}
+  <div class="card text-bg-light mb-3" style="max-width: 63rem;">
+    <div class="card-header">
+      <small>
+        @{{ comment.user.username }}
+      </small>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ comment.content }}</p>
+      <small class="card-title">{{ comment.timestamp }}</small>
+    </div>
   </div>
-  <div class="w-50 mx-auto mt-4">
+  {% endfor %}
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Comment</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'add_comment' post.id %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">@{{ user.username }}:</label>
+            <textarea class="form-control" id="message-text" name="content" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-dark">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  
+  {% comment %} <div class="w-50 mx-auto mt-4">
     <h4>Add a Comment</h4>
     <form method="post" action="{% url 'add_comment' post.id %}">
         {% csrf_token %}
@@ -99,6 +133,6 @@
         <button type="submit" class="btn btn-outline-dark">Add Comment</button>
     </form>
   </div>
-</div>
+</div> {% endcomment %}
 
 {% endblock %}
