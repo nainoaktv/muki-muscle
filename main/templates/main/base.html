@@ -1,4 +1,5 @@
 {%load static%}
+{% load bootstrap_icons %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +12,12 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
   <body>
@@ -19,7 +26,9 @@
       style="background-color: #e3f2fd"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">MukiMuscle</a>
+        <a class="navbar-brand" href="#">
+          <img src={% static 'assets/muki-logo.png' %} alt="Muki Logo" style="max-width: 150px;" />
+        </a>
         <form class="d-flex" role="search">
           <input
             class="form-control me-1"
@@ -42,6 +51,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/" id="home-btn">
+                {% bs_icon 'house-heart' size="20px" %}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="notification-btn">
+                {% bs_icon 'bell-fill' size="17px" %}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/profile/{{ current_user }}"
+                >
+                {% bs_icon 'person-badge' size="20px" %}
+                </a>
+            </li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -61,12 +88,6 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
             {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
@@ -76,13 +97,6 @@
                 <a class="nav-link" href="{% url 'signup' %}">Signup</a>
               </li>
             {% endif %}
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="/profile/{{ current_user }}"
-                >Profile</a
-              >
-            </li>
           </ul>
         </div>
       </div>
