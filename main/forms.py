@@ -6,6 +6,7 @@ from .models import Post, UserProfile
 
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(max_length=200)
     class Meta:
         model = Post
         fields = ['content']
