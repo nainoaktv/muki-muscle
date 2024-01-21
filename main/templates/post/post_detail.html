@@ -82,9 +82,6 @@
     </div>
   </div>
 
-  {% comment %} 
-  TODO: Update Comment display & add comment form
-  {% endcomment %}
   {% for comment in post.comments.all %}
   <div class="card text-bg-light mb-3" style="max-width: 63rem;">
     <div class="card-header">
@@ -122,17 +119,5 @@
     </div>
   </div>
 </div>
-  
-  {% comment %} <div class="w-50 mx-auto mt-4">
-    <h4>Add a Comment</h4>
-    <form method="post" action="{% url 'add_comment' post.id %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <textarea class="form-control" name="content" placeholder="Your comment..." rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-outline-dark">Add Comment</button>
-    </form>
-  </div>
-</div> {% endcomment %}
 
 {% endblock %}
