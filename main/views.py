@@ -152,5 +152,6 @@ def add_comment(request, post_id):
         post = Post.objects.get(pk=post_id)
         content = request.POST['content']
         Comment.objects.create(user=request.user, post=post, content=content)
+        
     
     return redirect('post_detail', post_id=post_id)

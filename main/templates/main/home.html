@@ -1,14 +1,11 @@
-{% extends "main/base.html" %}
+{% extends "main/base.html" %} 
 {% load bootstrap_icons %} 
-{% load static %}
-{% block content %}
-
+{% load static %} 
+{% block content %} 
 {% comment %} 
-
-! Create 2 new users and work on Auth logic for Reg & Login 
-TODO: Reroute to post details when clicking on Post
-TODO: Continue working on user card
-
+* In Prog: Create 2 new users and work on Auth logic for Reg & Login.
+TODO: Continue working on user card.
+! Icons will not work if internet is off.
 {% endcomment %}
 
 <div style="height: 100%">
@@ -59,10 +56,11 @@ TODO: Continue working on user card
             "
           >
             <a
-              class="btn btn-dark"
+              class="btn btn-outline-dark"
+              style="font-family: Lemon; font-size: 14px; padding: 2px;"
               href="/profile/{{user.username}}"
               role="button"
-              style="padding: 2px"
+              id="user-card-username"
             >
               @{{user.username}}
             </a>
@@ -97,31 +95,31 @@ TODO: Continue working on user card
       </div>
     </div>
 
-    
     <div style="width: 40%">
       {% for post in posts %} {% if post.id %}
-      <div class="card mb-3 mt-2" style="background: white;">
+      <div class="card mb-3 mt-2" style="background: white">
         <div class="card-body">
-          <div style="display: flex;">
+          <div style="display: flex">
             <a
-              class="card-title"
-                href="/profile/{{ post.user.username }}"
+              class="card-title text-decoration-none"
+              href="/profile/{{ post.user.username }}"
               role="button"
-              style="text-decoration: none;"
               id="post-user"
-              >
+            >
               @{{post.user}}
             </a>
-            <p class="card-text" style="margin-left: 7px;">
+            <p class="card-text" style="margin-left: 7px">
               <em class="text-body-secondary">
-                <small> {{post.display_time}} </small> 
+                <small> {{post.display_time}} </small>
               </em>
             </p>
           </div>
-          <a class="text-decoration-none text-dark" href="{% url 'post_detail' post.id %}">
-          <p class="card-text">{{post.content}}</p>
+          <a
+            class="text-decoration-none text-dark"
+            href="{% url 'post_detail' post.id %}"
+          >
+            <p class="card-text">{{post.content}}</p>
           </a>
-          
         </div>
         {% if post.image %}
         <img
@@ -133,24 +131,24 @@ TODO: Continue working on user card
         <div></div>
         {% endif %}
 
-        <div
-          class="card-footer"
-          style="display: flex; justify-content: space-around"
-        >
-          <button id="like-btn" type="button" style="border: none; background: none">
+        <div class="card-footer d-flex justify-content-around">
+          <button id="like-btn" type="button" class="border-0 bg-transparent">
             {% bs_icon 'balloon-heart-fill' size="25px" %}
           </button>
-          <button id="repost-btn" type="button" style="border: none; background: none">
+          <button id="repost-btn" type="button" class="border-0 bg-transparent">
             {% bs_icon 'repeat' size="25px" %}
           </button>
-          <button id="comment-btn" type="button" style="border: none; background: none">
+          <button
+            id="comment-btn"
+            type="button"
+            class="border-0 bg-transparent"
+          >
             {% bs_icon 'chat-text' size="25px" %}
           </button>
         </div>
       </div>
       {% endif %} {% endfor %}
     </div>
-
 
     <div
       style="
